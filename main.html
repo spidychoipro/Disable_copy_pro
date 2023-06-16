@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webuzz - Ultimate Text Copy Disabler</title>
+
+  <style>
+    body {
+      -webkit-touch-callout: none; /* Disable iOS copy/paste menu */
+      -webkit-user-select: none; /* Disable text selection */
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body oncontextmenu="return false;"> <!-- Disable right-click -->
+  <h1>Webuzz - Ultimate Text Copy Disabler</h1>
+
+  <p>This page has disabled text copying, right-clicking, keyboard shortcuts, and more.</p>
+
+  <script>
+    // Disable keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.shiftKey && e.code === 'KeyI') {
+        e.preventDefault(); // Disable Ctrl+Shift+I
+      }
+      if (e.ctrlKey && e.code === 'KeyU') {
+        e.preventDefault(); // Disable Ctrl+U
+      }
+      if (e.ctrlKey && e.code === 'KeyF') {
+        e.preventDefault(); // Disable Ctrl+F
+      }
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.code === 'KeyS') {
+        e.preventDefault(); // Disable Win+Shift+S (Windows) or Command+Shift+S (Mac)
+      }
+    });
+
+    // Detect extensions that enable copy and right-click
+    document.addEventListener('contextmenu', function(e) {
+      var selection = window.getSelection().toString();
+      if (selection === '') {
+        var extensionNames = ['enable', 'right', 'copy']; // Example extension names
+        var detected = extensionNames.some(function(name) {
+          return document.title.toLowerCase().includes(name.toLowerCase());
+        });
+        if (detected) {
+          e.preventDefault(); // Disable right-click when extension is detected
+        }
+      }
+    });
+
+    // Disable print screen (PrtSc) key
+    window.addEventListener('keyup', function(e) {
+      if (e.code === 'PrintScreen') {
+        e.preventDefault();
+        alert('Print Screen is disabled on this page.');
+      }
+    });
+  </script>
+</body>
+
+</html>
